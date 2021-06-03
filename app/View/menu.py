@@ -4,11 +4,15 @@ from app.Core.main import *
 
 root = Tk()
 
+vista = []
+
+
 #Menu Bar
 def main():
     menu_bar =  Menu(root)
     root.geometry("400x500")
     root.config(menu=menu_bar)
+
 
     administracion_bar = Menu(menu_bar, tearoff=0)
     administracion_bar.add_command(
@@ -30,13 +34,16 @@ def main():
     menu_bar.add_cascade(label="Transporte", menu=transporte_bar)
 
 def registrar_cliente():
+    global vista
     root.title("Registrar Cliente")
 
-    text = Label(root, text="Nombre: ")
-    text.grid(row=0, column=0, padx=2)
+    nombre_titulo = Label(root, text="Nombre: ")
+    nombre_titulo.grid(row=0, column=0, padx=2)
+    vista.append(nombre_titulo)
 
     nombre = Entry(root, width=30)
     nombre.grid(row=0, column=1, padx=2)
+    vista.append(nombre)
 
     text = Label(root, text="Apellido: ")
     text.grid(row=1, column=0, padx=2)
@@ -44,14 +51,20 @@ def registrar_cliente():
     apellido = Entry(root, width=30)
     apellido.grid(row=1, column=1, padx=2)
 
-    text = Label(root, text="Cedula: ")
-    text.grid(row=2, column=0, padx=2)
+    cedula_titulo = Label(root, text="Cedula: ")
+    cedula_titulo.grid(row=2, column=0, padx=2)
+    vista.append(cedula_titulo)
 
     cedula = Entry(root, width=30)
     cedula.grid(row=2, column=1, padx=2)
+    vista.append(cedula)
 
 
 def registrar_empleado():
+    global vista
+    for element in vista:
+        element.destroy()
+
     root.title("Registrar Empleado")
 
     text = Label(root, text="Nombre: ")
