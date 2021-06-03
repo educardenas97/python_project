@@ -4,6 +4,7 @@ from app.Core.main import *
 
 root = Tk()
 
+#Arreglo global que contiene los elemetos dinámicos 
 vista = []
 
 
@@ -35,6 +36,9 @@ def main():
 
 def registrar_cliente():
     global vista
+    for element in vista:
+        element.destroy()
+
     root.title("Registrar Cliente")
 
     nombre_titulo = Label(root, text="Nombre: ")
@@ -45,11 +49,13 @@ def registrar_cliente():
     nombre.grid(row=0, column=1, padx=2)
     vista.append(nombre)
 
-    text = Label(root, text="Apellido: ")
-    text.grid(row=1, column=0, padx=2)
+    apellido_titulo = Label(root, text="Apellido: ")
+    apellido_titulo.grid(row=1, column=0, padx=2)
+    vista.append(apellido_titulo)
 
     apellido = Entry(root, width=30)
     apellido.grid(row=1, column=1, padx=2)
+    vista.append(apellido)
 
     cedula_titulo = Label(root, text="Cedula: ")
     cedula_titulo.grid(row=2, column=0, padx=2)
@@ -59,6 +65,14 @@ def registrar_cliente():
     cedula.grid(row=2, column=1, padx=2)
     vista.append(cedula)
 
+    boton_registrar = Button(root, text="Registrar", command=lambda: app.registrar_cliente(nombre.get(), apellido.get(), int(cedula.get())))
+    boton_registrar.grid(row=3, column=1)
+    vista.append(boton_registrar)
+
+
+def app_registrar():
+    print('Registrado')
+
 
 def registrar_empleado():
     global vista
@@ -67,17 +81,33 @@ def registrar_empleado():
 
     root.title("Registrar Empleado")
 
-    text = Label(root, text="Nombre: ")
-    text.grid(row=0, column=0)
+    nombre_titulo = Label(root, text="Nombre: ")
+    nombre_titulo.grid(row=0, column=0)
+    vista.append(nombre_titulo)
 
     nombre = Entry(root, width=30)
     nombre.grid(row=0, column=1)
+    vista.append(nombre)
 
-    text = Label(root, text="Apellido: ")
-    text.grid(row=1, column=0)
+    apellido_titulo = Label(root, text="Apellido: ")
+    apellido_titulo.grid(row=1, column=0)
+    vista.append(apellido_titulo)
 
     apellido = Entry(root, width=30)
     apellido.grid(row=1, column=1)
+    vista.append(apellido)
+
+    cedula_titulo = Label(root, text="Cedula: ")
+    cedula_titulo.grid(row=2, column=0, padx=2)
+    vista.append(cedula_titulo)
+
+    cedula = Entry(root, width=30)
+    cedula.grid(row=2, column=1, padx=2)
+    vista.append(cedula)
+
+    boton_registrar = Button(root, text="Registrar", command=app_registrar)
+    boton_registrar.grid(row=3, column=1)
+    vista.append(boton_registrar)
 
 
 
