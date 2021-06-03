@@ -22,7 +22,8 @@ def main():
         label="Registrar Empleado", command=registrar_empleado)
 
     paqueteria_bar = Menu(menu_bar, tearoff=0)
-    paqueteria_bar.add_command(label="Registrar Paquete")
+    paqueteria_bar.add_command(
+        label="Registrar Paquete", command=registrar_paquete)
     paqueteria_bar.add_command(label="Ver paquetes en transito")
     paqueteria_bar.add_command(label="Ver paquetes registrados")
 
@@ -33,6 +34,7 @@ def main():
     menu_bar.add_cascade(label="Administracion", menu=administracion_bar)
     menu_bar.add_cascade(label="Paqueteria", menu=paqueteria_bar)
     menu_bar.add_cascade(label="Transporte", menu=transporte_bar)
+
 
 def registrar_cliente():
     global vista
@@ -65,13 +67,12 @@ def registrar_cliente():
     cedula.grid(row=2, column=1, padx=2)
     vista.append(cedula)
 
-    boton_registrar = Button(root, text="Registrar", command=lambda: app.registrar_cliente(nombre.get(), apellido.get(), int(cedula.get())))
+    boton_registrar = Button(root, text="Registrar", command=lambda: registrar_cliente_app(nombre.get(), apellido.get(), int(cedula.get())))
     boton_registrar.grid(row=3, column=1)
     vista.append(boton_registrar)
 
+    mostrar_datos_persona(app.empresa.clientes)
 
-def app_registrar():
-    print('Registrado')
 
 
 def registrar_empleado():
@@ -105,11 +106,52 @@ def registrar_empleado():
     cedula.grid(row=2, column=1, padx=2)
     vista.append(cedula)
 
-    boton_registrar = Button(root, text="Registrar", command=app_registrar)
+    boton_registrar = Button(root, text="Registrar", command=lambda: registrar_empleado_app(
+        nombre.get(), apellido.get(), int(cedula.get())))
     boton_registrar.grid(row=3, column=1)
     vista.append(boton_registrar)
 
+    mostrar_datos_persona(app.empresa.empleados)
 
+
+def registrar_paquete():
+    global vista
+    for element in vista:
+        element.destroy()
+
+    root.title("Registrar Empleado")
+
+
+
+
+def registrar_cliente_app(nombre, apellido, ci, ruc=0):
+    clientes = app.registrar_cliente(nombre, apellido, ci, ruc)
+    mostrar_datos_persona(clientes)
+
+def registrar_empleado_app(nombre, apellido, ci):
+    empleados = app.registrar_empleado(nombre, apellido, ci)
+    mostrar_datos_persona(empleados)
+
+    
+def mostrar_datos_persona(lista):
+    global vista
+    i=1
+    for element in lista:
+        nombre = Label(root, text=element.persona.nombre)
+        nombre.grid(row=5+i, column=0)
+        vista.append(nombre)
+
+        apellido = Label(root, text=element.persona.apellido)
+        apellido.grid(row=5+i, column=1)
+        vista.append(apellido)
+
+        cedula = Label(root, text=element.persona.ci)
+        cedula.grid(row=5+i, column=2)
+        i += 1
+        vista.append(cedula)
+
+        
+    
 
 main()
 root.mainloop()
