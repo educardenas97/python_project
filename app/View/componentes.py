@@ -1,3 +1,4 @@
+import datetime
 import tkinter as tk
 from app.Core.Controller import App
 
@@ -81,16 +82,18 @@ class Interfaz(tk.Frame):
         valor_articulo = self.crear_input(3,1)
 
         self.crear_boton("Registrar", 4, 1, lambda: self.app.registrar_paquete(
-            int(codigo.get()), int(peso.get()), descripcion.get(), valor_articulo.get()))
+            int(codigo.get()), int(peso.get()), descripcion.get(), int(valor_articulo.get())))
 
         self.mostrar_texto("Paquetes Pendientes: ", 5, 0)
         self.mostrar_texto(self.app.empresa.paquetes_pendientes.qsize(), 5, 1)
+        self.mostrar_texto("Paquetes en Transito:", 6, 0)
+        self.mostrar_datos(self.app.empresa.paquetes_transito, 7)
 
     def registrar_transporte(self):
         #Solucionar lo de la fecha
         self.limpiar_pantalla()
         self.master.title("Registrar Transportes")
-        self.mostrar_texto("Fecha de salida", 0, 0)
+        self.mostrar_texto("Fecha de salida: YYYY-MM-DD: ", 0, 0)
         fecha_salida = self.crear_input(0, 1)
         self.mostrar_texto("Precio x Kg.", 1, 0)
         precio_por_kg = self.crear_input(1, 1)
@@ -98,7 +101,14 @@ class Interfaz(tk.Frame):
         capacidad = self.crear_input(2, 1)
 
         self.crear_boton("Registrar", 3, 1, lambda: self.app.registrar_transporte(
-            (fecha_salida.get()), int(precio_por_kg.get()), int(capacidad.get())))
+            Interfaz.formatear_fecha(fecha_salida.get()), int(precio_por_kg.get()), int(capacidad.get())))
+
+        self.mostrar_texto("Transportes disponibles: ", 4, 0)
+        self.mostrar_datos(self.app.empresa.transportes_disponibles, 5)
+
+    def formatear_fecha(dato):
+        year, month, day = map(int, dato.split('-'))
+        return datetime.date(year, month, day)
 
 
     def crear_input(self, fila, columna):
