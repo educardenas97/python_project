@@ -6,7 +6,7 @@ from app.View import Componentes as componentes
 
 root = tk.Tk()
 componentes = componentes.Componentes(master=root)
-controlador = controlador.App("Fast Shipping", "Pepe loca")
+controlador = controlador.App("Fast Shipping", "Miami 12/Av.")
 interfaz = vista.Interfaz(controlador, componentes)
 interfaz.mostrar_menu()
 
