@@ -14,8 +14,8 @@ class Componentes(tk.Frame):
         self.elementos = []
         self.master.geometry("700x500")
 
-    def crear_menu(self, posicion, tearoff=0):
-        return tk.Menu(posicion, tearoff)
+    def crear_menu(self, posicion):
+        return tk.Menu(posicion, tearoff=0)
 
 
     def agregar_sub_menu(self, menu, texto, funcion):

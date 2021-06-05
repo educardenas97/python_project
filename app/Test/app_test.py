@@ -1,5 +1,5 @@
 import datetime
-from app.Core.main import *
+from app.Core.Controller import App
 
 app = App.App('Front', 'direct')
 
