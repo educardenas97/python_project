@@ -27,12 +27,11 @@ class Interfaz(tk.Frame):
         paqueteria_bar = tk.Menu(menu_bar, tearoff=0)
         paqueteria_bar.add_command(
             label="Registrar Paquete", command=self.registrar_paquete)
-        paqueteria_bar.add_command(label="Ver paquetes en transito")
-        paqueteria_bar.add_command(label="Ver paquetes registrados")
+        paqueteria_bar.add_command(label="Ver paquetes en transito", command=self.ver_paquetes_transito)
 
         transporte_bar = tk.Menu(menu_bar, tearoff=0)
         transporte_bar.add_command(label="Registrar transporte", command=self.registrar_transporte)
-        transporte_bar.add_command(label="Ver transportes registrados")
+        transporte_bar.add_command(label="Ver transportes registrados", command=self.ver_transportes)
 
         menu_bar.add_cascade(label="Administracion", menu=administracion_bar)
         menu_bar.add_cascade(label="Paqueteria", menu=paqueteria_bar)
@@ -52,7 +51,7 @@ class Interfaz(tk.Frame):
         self.crear_boton("Registrar", 4, 1, lambda: self.app.registrar_cliente(
             nombre.get(), apellido.get(), int(cedula.get()), int(ruc.get())))
 
-        self.mostrar_datos(self.app.empresa.clientes, 5)
+        self.mostrar_datos(self.app.empresa.clientes, 5, 1)
 
        
     def registrar_empleado(self):
@@ -67,7 +66,7 @@ class Interfaz(tk.Frame):
         self.crear_boton("Registrar", 4, 1, lambda: self.app.registrar_empleado(
             nombre.get(), apellido.get(), int(cedula.get())))
 
-        self.mostrar_datos(self.app.empresa.empleados, 5)
+        self.mostrar_datos(self.app.empresa.empleados, 5, 1)
     
     def registrar_paquete(self):
         self.limpiar_pantalla()
@@ -87,7 +86,7 @@ class Interfaz(tk.Frame):
         self.mostrar_texto("Paquetes Pendientes: ", 5, 0)
         self.mostrar_texto(self.app.empresa.paquetes_pendientes.qsize(), 5, 1)
         self.mostrar_texto("Paquetes en Transito:", 6, 0)
-        self.mostrar_datos(self.app.empresa.paquetes_transito, 7)
+        self.mostrar_datos(self.app.empresa.paquetes_transito, 7, 1)
 
     def registrar_transporte(self):
         #Solucionar lo de la fecha
@@ -104,7 +103,20 @@ class Interfaz(tk.Frame):
             Interfaz.formatear_fecha(fecha_salida.get()), int(precio_por_kg.get()), int(capacidad.get())))
 
         self.mostrar_texto("Transportes disponibles: ", 4, 0)
-        self.mostrar_datos(self.app.empresa.transportes_disponibles, 5)
+        self.mostrar_datos(self.app.empresa.transportes_disponibles, 5, 1)
+
+    def ver_paquetes_transito(self):
+        self.limpiar_pantalla()
+        self.master.title("Paquetes en transito")
+        self.mostrar_texto("Paquetes en transito: ", 0, 0)
+        self.mostrar_datos(self.app.empresa.paquetes_transito, 1, 1)
+
+    def ver_transportes(self):
+        self.limpiar_pantalla()
+        self.master.title("Transportes registrados")
+        self.mostrar_texto("Transportes registrados: ",0, 0)
+        self.mostrar_datos(self.app.empresa.transportes_disponibles, 1, 1)
+
 
     def formatear_fecha(dato):
         year, month, day = map(int, dato.split('-'))
@@ -131,10 +143,10 @@ class Interfaz(tk.Frame):
         for elemento in self.elementos:
             elemento.destroy()
 
-    def mostrar_datos(self, lista, fila):
+    def mostrar_datos(self, lista, fila, columna):
         i = 1
         for element in lista:
-            self.mostrar_texto(element, fila+i, 1)
+            self.mostrar_texto(element, fila+i, columna)
             i += 1
     
 
