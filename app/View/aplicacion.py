@@ -1,13 +1,13 @@
 import tkinter as tk
-from app.Core.Controller import App
-from app.View.interfaz import *
-from app.View.componentes import *
+from app.Core.Controller import App as controlador
+from app.View import Interfaz as vista
+from app.View import Componentes as componentes
 
 
 root = tk.Tk()
-componentes = Componentes(master=root)
-controlador = App.App("Fast Shipping", "Pepe loca")
-interfaz = Interfaz(controlador, componentes)
+componentes = componentes.Componentes(master=root)
+controlador = controlador.App("Fast Shipping", "Pepe loca")
+interfaz = vista.Interfaz(controlador, componentes)
 interfaz.mostrar_menu()
 
 
