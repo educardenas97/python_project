@@ -15,17 +15,17 @@ class Interfaz():
 
         #Se crea el menu desplegable para administración
         administracion_bar = self.componentes.crear_menu(menu_bar)
-        self.componentes.agregar_sub_menu(administracion_bar, "Registrar Cliente", self.registrar_cliente)
-        self.componentes.agregar_sub_menu(administracion_bar, "Registrar Empleado", self.registrar_empleado)
+        self.componentes.agregar_sub_menu(administracion_bar, "Registrar Cliente", self.menu_cliente)
+        self.componentes.agregar_sub_menu(administracion_bar, "Registrar Empleado", self.menu_empleado)
 
         #Se crea el menu desplegable para paqueteria
         paqueteria_bar = self.componentes.crear_menu(menu_bar)
-        self.componentes.agregar_sub_menu(paqueteria_bar, "Registrar Paquete", self.registrar_paquete)
+        self.componentes.agregar_sub_menu(paqueteria_bar, "Registrar Paquete", self.menu_paquete)
         self.componentes.agregar_sub_menu(paqueteria_bar, "Ver Tickets", self.ver_paquetes_transito)
 
         #Se crea el menu desplegable para transportes
         transporte_bar = self.componentes.crear_menu(menu_bar)
-        self.componentes.agregar_sub_menu(transporte_bar, "Registrar Transporte", self.registrar_transporte)
+        self.componentes.agregar_sub_menu(transporte_bar, "Registrar Transporte", self.menu_transporte)
         self.componentes.agregar_sub_menu(transporte_bar, "Ver transportes", self.ver_transportes)
         
         #Se agregan las opciones generadas a la barra principal
@@ -33,7 +33,7 @@ class Interfaz():
         menu_bar.add_cascade(label="Paqueteria", menu=paqueteria_bar)
         menu_bar.add_cascade(label="Transporte", menu=transporte_bar)
 
-    def registrar_cliente(self):
+    def menu_cliente(self):
         """Despliega las opciones para el registro de un cliente"""
 
         self.componentes.limpiar_pantalla()
@@ -46,12 +46,15 @@ class Interfaz():
         cedula = self.componentes.crear_input(2, 1)
         self.componentes.mostrar_texto("RUC", 3, 0)
         ruc = self.componentes.crear_input(3, 1)
-        self.componentes.crear_boton("Registrar", 4, 1, lambda: self.app.registrar_cliente(
-            nombre.get(), apellido.get(), int(cedula.get()), int(ruc.get())))
+        self.componentes.crear_boton("Registrar", 4, 1, lambda: self.registrar_cliente(nombre.get(), apellido.get(), int(cedula.get()), int(ruc.get())))
         #Se muestran los datos almacenados
         self.componentes.mostrar_datos(self.app.empresa.clientes, 5, 1)
 
-    def registrar_empleado(self):
+    def registrar_cliente(self, nombre, apellido, cedula, ruc):
+        clientes = self.app.registrar_cliente(nombre, apellido, cedula, ruc)
+        self.componentes.mostrar_datos(clientes, 5, 1)
+
+    def menu_empleado(self):
         """Despliega las opciones para el registro de un empleado"""
 
         self.componentes.limpiar_pantalla()
@@ -63,12 +66,16 @@ class Interfaz():
         apellido = self.componentes.crear_input(1, 1)
         self.componentes.mostrar_texto("Cedula", 2, 0)
         cedula = self.componentes.crear_input(2, 1)
-        self.componentes.crear_boton("Registrar", 4, 1, lambda: self.app.registrar_empleado(
+        self.componentes.crear_boton("Registrar", 3, 1, lambda: self.registrar_empleado(
             nombre.get(), apellido.get(), int(cedula.get())))
         #Se muestran los datos almacenados
-        self.componentes.mostrar_datos(self.app.empresa.empleados, 5, 1)
+        self.componentes.mostrar_datos(self.app.empresa.empleados, 4, 1)
+    
+    def registrar_empleado(self, nombre, apellido, cedula):
+        empleados = self.app.registrar_empleado(nombre, apellido, cedula)
+        self.componentes.mostrar_datos(empleados, 4, 1)
 
-    def registrar_paquete(self):
+    def menu_paquete(self):
         """Despliega las opciones para el registro de un paquete"""
 
         self.componentes.limpiar_pantalla()
@@ -82,7 +89,7 @@ class Interfaz():
         descripcion = self.componentes.crear_input(2, 1)
         self.componentes.mostrar_texto("Valor Articulo*", 3, 0)
         valor_articulo = self.componentes.crear_input(3, 1)
-        self.componentes.crear_boton("Registrar", 4, 1, lambda: self.app.registrar_paquete(
+        self.componentes.crear_boton("Registrar", 4, 1, lambda: self.registrar_paquete(
             int(codigo.get()), int(peso.get()), descripcion.get(), int(valor_articulo.get())))
         #Se muestran los datos almacenados
         self.componentes.mostrar_texto("Paquetes Pendientes: ", 5, 0)
@@ -90,7 +97,15 @@ class Interfaz():
         self.componentes.mostrar_texto("Paquetes en Transito:", 6, 0)
         self.componentes.mostrar_datos(self.app.empresa.paquetes_transito, 7, 1)
 
-    def registrar_transporte(self):
+    def registrar_paquete(self, codigo, peso, descripcion, valor_articulo):
+        self.app.registrar_paquete(codigo, peso, descripcion, valor_articulo)
+        self.componentes.mostrar_texto("Paquetes Pendientes: ", 5, 0)
+        self.componentes.mostrar_texto(self.app.empresa.paquetes_pendientes.qsize(), 5, 1)
+        self.componentes.mostrar_texto("Paquetes en Transito:", 6, 0)
+        self.componentes.mostrar_datos(self.app.empresa.paquetes_transito, 7, 1)
+
+
+    def menu_transporte(self):
         """Despliega las opciones para el registro de un transporte"""
 
         self.componentes.limpiar_pantalla()
@@ -102,11 +117,16 @@ class Interfaz():
         precio_por_kg = self.componentes.crear_input(1, 1)
         self.componentes.mostrar_texto("Capacidad en Kg.", 2, 0)
         capacidad = self.componentes.crear_input(2, 1)
-        self.componentes.crear_boton("Registrar", 3, 1, lambda: self.app.registrar_transporte(
+        self.componentes.crear_boton("Registrar", 3, 1, lambda: self.registrar_transporte(
             Interfaz.formatear_fecha(fecha_salida.get()), int(precio_por_kg.get()), int(capacidad.get())))
         #Se muestran los datos almacenados
         self.componentes.mostrar_texto("Transportes disponibles: ", 4, 0)
         self.componentes.mostrar_datos(self.app.empresa.transportes_disponibles, 5, 1)
+
+    def registrar_transporte(self, fecha, precio, capacidad):
+        transportes = self.app.registrar_transporte(fecha, precio, capacidad)
+        self.componentes.mostrar_datos(transportes, 5, 1)
+
 
     def ver_paquetes_transito(self):
         self.componentes.limpiar_pantalla()
