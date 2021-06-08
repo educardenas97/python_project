@@ -1,4 +1,4 @@
-# Paradigmas de la programación - Parcial II
+# Paradigmas de la programación - Final I
 ## Eduardo Gómez
 
 
@@ -43,7 +43,14 @@ El Core del sistema se encuenta modularizado de la siguiente manera:
 - [Database] - Paquete que interactua con la base de datos
 
 ## View
-Interfaz por linea de comandos, esta a su vez cuenta con divisiones según el módulo
+Con el fin de lograr una mayor modularización se estructura la interfaz de la siguiente manera:
+1. **Componentes**
+En esta clase se encuentran los métodos necesarios para crear componentes en la interfaz grafica, tales como
+botones, texto, etc. Esta clase hereda las funciones de la biblioteca tkinter.
+2. **Interfaz**
+En esta clase se encuentra la integración de la GUI y la Aplicación del sistema
+
+GUI, esta a su vez cuenta con divisiones según el módulo
 del sistema. Alguno de ellos son:
 - **Menu Principal:**
 En este se encuentran las opciones descriptas a continuación. La utilización de

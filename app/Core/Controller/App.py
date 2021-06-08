@@ -15,14 +15,14 @@ class App():
     """
 
 
-    def __init__(self, razon_social, direccion):
+    def __init__(self, razon_social: str, direccion: str) -> None:
         self.empresa = Empresa.Empresa(razon_social, direccion)
         self.db = Database.Database()
         #self.db.insert(self.empresa, 'empresa')
         #Agregar una comprobación en caso de que el sistema se reinicie.
 
 
-    def registrar_empleado(self, nombre, apellido, ci):
+    def registrar_empleado(self, nombre: str, apellido: str, ci: int) -> list:
         """
         Registro de empleado
         Parametros:
@@ -37,8 +37,7 @@ class App():
         #self.db.insert(self.empresa, 'empresa')
         return self.empresa.empleados
 
-
-    def registrar_cliente(self, nombre, apellido, ci, ruc=0):
+    def registrar_cliente(self, nombre: str, apellido: str, ci: int, ruc: int=0) -> list:
         """
         Registro de cliente
         Parametros:
@@ -55,7 +54,7 @@ class App():
         return self.empresa.clientes
 
 
-    def registrar_transporte(self, fecha_salida, precio_por_kg, capacidad, fecha_llegada=0):
+    def registrar_transporte(self, fecha_salida: datetime, precio_por_kg:int, capacidad:int, fecha_llegada=0) -> list:
         """
         Registro de nuevos transportes
 
@@ -85,7 +84,7 @@ class App():
         return self.empresa.transportes_disponibles
     
 
-    def registrar_paquete(self, codigo, peso, descripcion, valor_articulo=0):
+    def registrar_paquete(self, codigo: int, peso: int, descripcion: str, valor_articulo: int=0) -> int:
         """
         Registro de nuevos paquetes
         Parametros:
@@ -111,7 +110,7 @@ class App():
         return self.empresa.paquetes_pendientes.qsize()
 
 
-    def generar_ticket_recepcion(transporte, paquete, cliente):
+    def generar_ticket_recepcion(transporte: object, paquete: object, cliente: object) -> object:
         """
         __Funcion de clase__
         Parametros:
@@ -128,7 +127,7 @@ class App():
         return ticket
 
 
-    def determinar_cliente(clientes, paquete):
+    def determinar_cliente(clientes: object, paquete: object) -> object:
         """
         __Funcion de clase__
         Determina el cliente al cual pertenece el paquete
@@ -147,14 +146,14 @@ class App():
         return Persona.Cliente(Persona.Persona("Desconocido", "Desconocido", 0))
 
 
-    def agregar_paquete(codigo, peso,  descripcion, valor_articulo=0):
+    def agregar_paquete(codigo: int, peso: int,  descripcion: str, valor_articulo: int=0) -> object:
         """ 
         __Funcion de clase__
         Parametros:
             argumento1(int): codigo identificador del paquete
             argumento2(int): peso del paquete en Gr.
             argumento3(str): breve descripcion del contenido del paquete
-            argumento4(int): 
+            argumento4(int): valor del articulo
         """
 
         if peso > 0 and peso <= 100:

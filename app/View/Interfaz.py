@@ -50,7 +50,7 @@ class Interfaz():
         #Se muestran los datos almacenados
         self.componentes.mostrar_datos(self.app.empresa.clientes, 5, 1)
 
-    def registrar_cliente(self, nombre, apellido, cedula, ruc):
+    def registrar_cliente(self, nombre:str, apellido:str, cedula:int, ruc:int):
         clientes = self.app.registrar_cliente(nombre, apellido, cedula, ruc)
         self.componentes.mostrar_datos(clientes, 5, 1)
 
@@ -71,7 +71,7 @@ class Interfaz():
         #Se muestran los datos almacenados
         self.componentes.mostrar_datos(self.app.empresa.empleados, 4, 1)
     
-    def registrar_empleado(self, nombre, apellido, cedula):
+    def registrar_empleado(self, nombre:str, apellido:str, cedula:int):
         empleados = self.app.registrar_empleado(nombre, apellido, cedula)
         self.componentes.mostrar_datos(empleados, 4, 1)
 
@@ -83,7 +83,7 @@ class Interfaz():
         #Se generan los elementos para el input
         self.componentes.mostrar_texto("Codigo", 0, 0)
         codigo = self.componentes.crear_input(0, 1)
-        self.componentes.mostrar_texto("Peso", 1, 0)
+        self.componentes.mostrar_texto("Peso (en gramos)", 1, 0)
         peso = self.componentes.crear_input(1, 1)
         self.componentes.mostrar_texto("Descripcion", 2, 0)
         descripcion = self.componentes.crear_input(2, 1)
@@ -97,7 +97,7 @@ class Interfaz():
         self.componentes.mostrar_texto("Paquetes en Transito:", 6, 0)
         self.componentes.mostrar_datos(self.app.empresa.paquetes_transito, 7, 1)
 
-    def registrar_paquete(self, codigo, peso, descripcion, valor_articulo):
+    def registrar_paquete(self, codigo:int, peso:int, descripcion:int, valor_articulo:int):
         self.app.registrar_paquete(codigo, peso, descripcion, valor_articulo)
         self.componentes.mostrar_texto("Paquetes Pendientes: ", 5, 0)
         self.componentes.mostrar_texto(self.app.empresa.paquetes_pendientes.qsize(), 5, 1)
@@ -123,7 +123,7 @@ class Interfaz():
         self.componentes.mostrar_texto("Transportes disponibles: ", 4, 0)
         self.componentes.mostrar_datos(self.app.empresa.transportes_disponibles, 5, 1)
 
-    def registrar_transporte(self, fecha, precio, capacidad):
+    def registrar_transporte(self, fecha, precio:int, capacidad:int):
         transportes = self.app.registrar_transporte(fecha, precio, capacidad)
         self.componentes.mostrar_datos(transportes, 5, 1)
 
